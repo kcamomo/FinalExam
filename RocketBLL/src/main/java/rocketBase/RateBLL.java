@@ -11,11 +11,9 @@ import rocketDomain.RateDomainModel;
 
 public class RateBLL {
 	
-	//FINISHED
 
 	private static RateDAL _RateDAL = new RateDAL();
 	
-	//CHNAGE TO PUBLIC OR ROCKTSERVER WONT WORK
 	public static double getRate(int GivenCreditScore) throws RateException 
 	{
 		double dInterestRate = 0;
@@ -50,9 +48,6 @@ public class RateBLL {
 		
 	}
 	
-	
-	
-	
 	//TODO - RocketBLL RateBLL.getPayment
 	//		how to use:
 	//		https://poi.apache.org/apidocs/org/apache/poi/ss/formula/functions/FinanceLib.html
@@ -61,8 +56,4 @@ public class RateBLL {
 	{		
 		return FinanceLib.pmt(r, n, p, f, t);
 	}
-	
-	
-
-
 }

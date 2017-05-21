@@ -22,8 +22,7 @@ public class RateException extends Exception {
 
 	public RateException(RateDomainModel r) {
 
-		rate=r;
-		
+		rate = r;
 		
 	}
 
