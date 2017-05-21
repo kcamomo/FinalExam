@@ -5,13 +5,18 @@ import java.util.ArrayList;
 import org.apache.poi.ss.formula.functions.*;
 
 import exceptions.RateException;
+import rocketData.LoanRequest;
 import rocketDomain.RateDomainModel;
 
+
 public class RateBLL {
+	
+	//FINISHED
 
 	private static RateDAL _RateDAL = new RateDAL();
 	
-	static double getRate(int GivenCreditScore) throws RateException 
+	//CHNAGE TO PUBLIC OR ROCKTSERVER WONT WORK
+	public static double getRate(int GivenCreditScore) throws RateException 
 	{
 		double dInterestRate = 0;
 		
@@ -23,31 +28,32 @@ public class RateBLL {
 		//		hints:  you have to sort the rates...  you can do this by using
 		//			a comparator... or by using an OrderBy statement in the HQL
 		
+		ArrayList<RateDomainModel> Rates = RateDAL.getAllRates();
+		for (RateDomainModel rate:Rates){
+			if(rate.getiMinCreditScore() <= GivenCreditScore){
+				dInterestRate = rate.getdInterestRate();
+			}
+		}
+		
 		
 		//TODO - RocketBLL RateBLL.getRate
 		//			obviously this should be changed to return the determined rate
-		
-		ArrayList<RateDomainModel> rates = RateDAL.getAllRates();
-		
+	if (dInterestRate==0){
+		RateDomainModel rateDomainModel= new RateDomainModel();
+		rateDomainModel.setiMinCreditScore(GivenCreditScore);
+			
+		throw new RateException(rateDomainModel);		
+	}
+	return dInterestRate;
 
-		//TODO: Filter the ArrayList...  look for the correct rate for the given credit score.
-		//	Easiest way is to apply a filter using a Lambda function.
-		//
-		//	Example... how to use Lambda functions:
-		//			https://github.com/CISC181/Lambda
-		
-		return dInterestRate;
-		
+
 		
 	}
 	
 	
 	
 	
-	
-	
-	
-	//TODO - RocketBLL RateBLL.getPayment 
+	//TODO - RocketBLL RateBLL.getPayment
 	//		how to use:
 	//		https://poi.apache.org/apidocs/org/apache/poi/ss/formula/functions/FinanceLib.html
 	
@@ -55,4 +61,8 @@ public class RateBLL {
 	{		
 		return FinanceLib.pmt(r, n, p, f, t);
 	}
+	
+	
+
+
 }

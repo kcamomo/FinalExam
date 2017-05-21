@@ -11,6 +11,7 @@ import javax.swing.SwingUtilities;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Marshaller;
 
+import exceptions.RateException;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
@@ -31,6 +32,7 @@ import netgame.common.Client;
 
 import rocket.app.view.MortgageController;
 import rocketData.LoanRequest;
+import rocketDomain.RateDomainModel;
 import rocketServer.RocketHub;
 
 public class MainApp extends Application {
@@ -153,6 +155,10 @@ public class MainApp extends Application {
 					LoanRequest lq = (LoanRequest)message;
 					rController.HandleLoanRequestDetails(lq);
 				} 
+				else if (message instanceof RateException)
+				{
+					rController.HandleError((RateException) message);
+				}
 				else if (message instanceof Object) {
 				}
 			});
